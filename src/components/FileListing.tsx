@@ -25,25 +25,23 @@ import { layouts } from './SwitchLayout'
 import Loading, { LoadingIcon } from './Loading'
 import FourOhFour from './FourOhFour'
 import Auth from './Auth'
-import TextPreview from './previews/TextPreview'
-import MarkdownPreview from './previews/MarkdownPreview'
-import CodePreview from './previews/CodePreview'
-import OfficePreview from './previews/OfficePreview'
-import AudioPreview from './previews/AudioPreview'
-import VideoPreview from './previews/VideoPreview'
-import PDFPreview from './previews/PDFPreview'
-import URLPreview from './previews/URLPreview'
-import ImagePreview from './previews/ImagePreview'
-import DefaultPreview from './previews/DefaultPreview'
 import { PreviewContainer } from './previews/Containers'
 
 import FolderListLayout from './FolderListLayout'
 import FolderGridLayout from './FolderGridLayout'
 
-// Disabling SSR for some previews
-const EPUBPreview = dynamic(() => import('./previews/EPUBPreview'), {
-  ssr: false,
-})
+// ⚡️ 核心优化：将重型预览组件全部改为懒加载（按需下载，瞬间提升首屏打开速度）
+const AudioPreview = dynamic(() => import('./previews/AudioPreview'), { ssr: false })
+const CodePreview = dynamic(() => import('./previews/CodePreview'), { ssr: false })
+const DefaultPreview = dynamic(() => import('./previews/DefaultPreview'), { ssr: false })
+const EPUBPreview = dynamic(() => import('./previews/EPUBPreview'), { ssr: false })
+const ImagePreview = dynamic(() => import('./previews/ImagePreview'), { ssr: false })
+const MarkdownPreview = dynamic(() => import('./previews/MarkdownPreview'), { ssr: false })
+const OfficePreview = dynamic(() => import('./previews/OfficePreview'), { ssr: false })
+const PDFPreview = dynamic(() => import('./previews/PDFPreview'), { ssr: false })
+const TextPreview = dynamic(() => import('./previews/TextPreview'), { ssr: false })
+const URLPreview = dynamic(() => import('./previews/URLPreview'), { ssr: false })
+const VideoPreview = dynamic(() => import('./previews/VideoPreview'), { ssr: false })
 
 /**
  * Convert url query into path string
@@ -150,8 +148,7 @@ const FileListing: FC<{ query?: ParsedUrlQuery }> = ({ query }) => {
   const [selected, setSelected] = useState<{ [key: string]: boolean }>({})
   const [totalSelected, setTotalSelected] = useState<0 | 1 | 2>(0)
   const [totalGenerating, setTotalGenerating] = useState<boolean>(false)
-  const [folderGenerating, setFolderGenerating] = useState<{
-    [key: string]: boolean
+  const [folderGenerating, setFolderGenerating] = useState<{[key: string]: boolean
   }>({})
 
   const router = useRouter()
@@ -185,7 +182,7 @@ const FileListing: FC<{ query?: ParsedUrlQuery }> = ({ query }) => {
     )
   }
 
-  const responses: any[] = data ? [].concat(...data) : []
+  const responses: any[] = data ? [].concat(...data) :[]
 
   const isLoadingInitialData = !data && !error
   const isLoadingMore = isLoadingInitialData || (size > 0 && data && typeof data[size - 1] === 'undefined')
@@ -195,7 +192,7 @@ const FileListing: FC<{ query?: ParsedUrlQuery }> = ({ query }) => {
 
   if ('folder' in responses[0]) {
     // Expand list of API returns into flattened file data
-    const folderChildren = [].concat(...responses.map(r => r.folder.value)) as OdFolderObject['value']
+    const folderChildren =[].concat(...responses.map(r => r.folder.value)) as OdFolderObject['value']
 
     // Find README.md file to render
     const readmeFile = folderChildren.find(c => c.name.toLowerCase() === 'readme.md')
@@ -206,7 +203,7 @@ const FileListing: FC<{ query?: ParsedUrlQuery }> = ({ query }) => {
     // File selection
     const genTotalSelected = (selected: { [key: string]: boolean }) => {
       const selectInfo = getFiles().map(c => Boolean(selected[c.id]))
-      const [hasT, hasF] = [selectInfo.some(i => i), selectInfo.some(i => !i)]
+      const [hasT, hasF] =[selectInfo.some(i => i), selectInfo.some(i => !i)]
       return hasT && hasF ? 1 : !hasF ? 2 : 0
     }
 

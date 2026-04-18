@@ -66,7 +66,6 @@
     "@types/react": "18.2.14",
     "@types/react-copy-to-clipboard": "^5.0.4",
     "@types/react-dom": "^18.0.10",
-    "@types/react-pdf": "^7.0.0",
     "@types/react-syntax-highlighter": "^15.5.6",
     "autoprefixer": "^10.4.13",
     "eslint-config-next": "13.4.7",
@@ -82,12 +81,12 @@
     "arrowParens": "avoid",
     "singleQuote": true,
     "semi": false,
-    "plugins":[
+    "plugins": [
       "prettier-plugin-tailwindcss"
     ]
   },
   "eslintConfig": {
-    "extends":[
+    "extends": [
       "next",
       "next/core-web-vitals",
       "prettier"
