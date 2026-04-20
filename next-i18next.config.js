@@ -8,4 +8,11 @@ module.exports = {
   localePath: typeof window === 'undefined'
     ? path.resolve('./public/locales')
     : '/locales',
+    
+  // 原作者的护城河：防止长句翻译被标点符号截断失效
+  reloadOnPrerender: process.env.NODE_ENV === 'development',
+  keySeparator: false,
+  namespaceSeparator: false,
+  pluralSeparator: '——',
+  contextSeparator: '——'
 }
