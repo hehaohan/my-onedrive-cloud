@@ -1,13 +1,11 @@
-const path = require('path')
+const { i18n } = require('./next-i18next.config')
 
 module.exports = {
-  i18n: {
-    defaultLocale: 'en',
-    // 覆盖了原项目所有的语言种类
-    locales:['en', 'zh', 'tw', 'ja', 'es', 'ko', 'fr', 'de', 'ru', 'tr', 'id', 'vi'],
+  i18n,
+  reactStrictMode: true,
+  trailingSlash: true,
+  // 🛡️ 保护 Vercel 免费额度，关闭图像优化刺客
+  images: {
+    unoptimized: true,
   },
-  // 🚨 核心魔法：向 Vercel 发出死命令，无论在云端还是本地，必须沿着这个绝对路径把字典带上！
-  localePath: typeof window === 'undefined'
-    ? path.resolve('./public/locales')
-    : '/locales',
 }
