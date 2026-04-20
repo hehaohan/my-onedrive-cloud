@@ -1,15 +1,13 @@
-const { i18n } = require('./next-i18next.config')
+const path = require('path')
 
 module.exports = {
-  i18n,
-  reactStrictMode: true,
-  trailingSlash: true,
-  images: {
-    unoptimized: true,
+  i18n: {
+    defaultLocale: 'en',
+    // 覆盖了原项目所有的语言种类
+    locales:['en', 'zh', 'tw', 'ja', 'es', 'ko', 'fr', 'de', 'ru', 'tr', 'id', 'vi'],
   },
-  // 🚨 终极防丢补丁：强行要求 Vercel 在打包 Serverless 函数时，把这个多语言文件塞进去！
-  outputFileTracingIncludes: {
-    '/*': ['./next-i18next.config.js'],
-    '/api/**/*': ['./next-i18next.config.js'],
-  }
+  // 🚨 核心魔法：向 Vercel 发出死命令，无论在云端还是本地，必须沿着这个绝对路径把字典带上！
+  localePath: typeof window === 'undefined'
+    ? path.resolve('./public/locales')
+    : '/locales',
 }
