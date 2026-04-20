@@ -4,8 +4,14 @@ module.exports = {
   i18n,
   reactStrictMode: true,
   trailingSlash: true,
-  // 🛡️ 保护 Vercel 免费额度，关闭图像优化刺客
   images: {
     unoptimized: true,
   },
+  // 🚨 霸王条款：强迫 Vercel 机器人无论如何必须把配置文件和字典文件夹打包进服务器！
+  experimental: {
+    outputFileTracingIncludes: {
+      '/*':['./next-i18next.config.js', './public/locales/**/*'],
+      '/api/**/*': ['./next-i18next.config.js', './public/locales/**/*'],
+    }
+  }
 }
